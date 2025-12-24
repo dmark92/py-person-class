@@ -2,28 +2,23 @@ class Person:
     people: dict[str, "Person"] = {}
 
     def __init__(self, name: str, age: int) -> None:
-        self.name: str = name
-        self.age: int = age
-
+        self.name = name
+        self.age = age
         Person.people[name] = self
 
 
 def create_person_list(people: list[dict]) -> list["Person"]:
-    result: list[Person] = []
+    result = [Person(data["name"], data["age"]) for data in people]
 
-    # 1. create all Person instances
-    for data in people:
-        person = Person(data["name"], data["age"])
-        result.append(person)
-
-    # 2. add wife / husband links
     for data in people:
         person = Person.people[data["name"]]
 
-        if "wife" in data and data["wife"] is not None:
-            person.wife = Person.people[data["wife"]]
+        wife = data.get("wife")
+        if wife is not None:
+            person.wife = Person.people[wife]
 
-        if "husband" in data and data["husband"] is not None:
-            person.husband = Person.people[data["husband"]]
+        husband = data.get("husband")
+        if husband is not None:
+            person.husband = Person.people[husband]
 
     return result
