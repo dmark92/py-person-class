@@ -1,17 +1,15 @@
 class Person:
-    # class attribute to store all persons by name
-    people = {}
+    people: dict[str, "Person"] = {}
 
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
+    def __init__(self, name: str, age: int) -> None:
+        self.name: str = name
+        self.age: int = age
 
-        # register person in class dictionary
         Person.people[name] = self
 
 
-def create_person_list(people: list) -> list:
-    result = []
+def create_person_list(people: list[dict]) -> list["Person"]:
+    result: list[Person] = []
 
     # 1. create all Person instances
     for data in people:
